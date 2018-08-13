@@ -8,9 +8,11 @@ import React from 'react'
 // Components & Pages imports
 import Todo from '../to-do/to-do'
 import About from '../about/about'
+import Menu from '../template/menu'
 
 export default props => (
     <div className='container'>
+        <Menu />
         <Todo />
         <About />
     </div>
