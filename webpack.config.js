@@ -13,7 +13,7 @@ module.exports = {
 
     // Configuração do Webserver
     devServer: {
-        port: 80,
+        port: 8080,
         contentBase: './public'
     },
 
