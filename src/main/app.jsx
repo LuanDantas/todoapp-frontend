@@ -1,6 +1,7 @@
 // Dependências CSS
 import 'modules/bootstrap/dist/css/bootstrap.min.css'
 import 'modules/font-awesome/css/font-awesome.min.css'
+import '../template/custom.css'
 
 // Default imports
 import React from 'react'
