@@ -21,6 +21,8 @@ export default class Todo extends Component {
         // Esta linha basicamente força o bind para o this não vir vazio
         this.handleChange = this.handleChange.bind(this)
         this.handleAdd = this.handleAdd.bind(this)
+        this.handleMarkAsDone = this.handleMarkAsDone.bind(this)
+        this.handleMarkAsPending = this.handleMarkAsPending.bind(this)
         this.handleRemove = this.handleRemove.bind(this)
 
         // Chamada do método refresh
@@ -29,7 +31,8 @@ export default class Todo extends Component {
 
     // Método para pegar a lista mais atualizada
     refresh() {
-        Axios.get(`${ URL }?sort=-createdAt`).then( resp => this.setState({ ...this.state, description: '', list: resp.data }) )
+        Axios.get(`${ URL }?sort=-createdAt`)
+             .then( resp => this.setState({ ...this.state, description: '', list: resp.data }) )
     }
     
     // Método que será chamado pelo evento 'onChange' do nosso input do componente 'to-do-form'
@@ -41,12 +44,26 @@ export default class Todo extends Component {
     // Método para adicionar uma nova tarefa no banco de dados
     handleAdd() {
         const description = this.state.description
-        Axios.post(URL, { description }).then(resp => this.refresh())
+        Axios.post(URL, { description })
+             .then(resp => this.refresh())
     }
 
     // Método para remover/excluir o item(to-do) selecionado
     handleRemove (todo) {
-        Axios.delete( `${ URL }/${ todo._id }` ).then( resp => this.refresh() )
+        Axios.delete( `${ URL }/${ todo._id }` )
+             .then( resp => this.refresh() )
+    }
+
+    // Método para marcar o item como finalizado
+    handleMarkAsDone (todo) {
+        Axios.put( `${ URL }/${ todo._id }`, { ...todo, done: true } )
+             .then( resp => this.refresh() )
+    }
+
+    // Método para marcar o item como pendente
+    handleMarkAsPending (todo) {
+        Axios.put(`${URL}/${todo._id}`, { ...todo, done: false })
+             .then(resp => this.refresh())
     }
 
     render() {
@@ -57,7 +74,11 @@ export default class Todo extends Component {
                     description={ this.state.description }
                     handleChange={ this.handleChange }
                     handleAdd={ this.handleAdd } />
-                <TodoList list={ this.state.list } handleRemove={ this.handleRemove } />
+                <TodoList 
+                    list={ this.state.list } 
+                    handleMarkAsDone={this.handleMarkAsDone}
+                    handleMarkAsPending={this.handleMarkAsPending}
+                    handleRemove={ this.handleRemove } />
             </div>
         )
     }
