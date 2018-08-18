@@ -24,6 +24,7 @@ export default class Todo extends Component {
         this.handleMarkAsDone = this.handleMarkAsDone.bind(this)
         this.handleMarkAsPending = this.handleMarkAsPending.bind(this)
         this.handleRemove = this.handleRemove.bind(this)
+        this.handleSearch = this.handleSearch.bind(this)
 
         // Chamada do método refresh
         this.refresh()
@@ -67,6 +68,11 @@ export default class Todo extends Component {
              .then(resp => this.refresh())
     }
 
+    // Método para buscar os itens cadastrados
+    handleSearch () {
+        this.refresh( this.state.description )
+    }
+
     render() {
         return(
             <div>
@@ -74,7 +80,8 @@ export default class Todo extends Component {
                 <TodoForm
                     description={ this.state.description }
                     handleChange={ this.handleChange }
-                    handleAdd={ this.handleAdd } />
+                    handleAdd={ this.handleAdd }
+                    handleSearch={ this.handleSearch } />
                 <TodoList 
                     list={ this.state.list } 
                     handleMarkAsDone={this.handleMarkAsDone}
