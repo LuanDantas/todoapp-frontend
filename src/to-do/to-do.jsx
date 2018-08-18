@@ -20,11 +20,14 @@ export default class Todo extends Component {
 
         // Esta linha basicamente força o bind para o this não vir vazio
         this.handleChange = this.handleChange.bind(this)
+
         this.handleAdd = this.handleAdd.bind(this)
+        this.handleSearch = this.handleSearch.bind(this)
+        this.handleClear = this.handleClear.bind(this)
+
         this.handleMarkAsDone = this.handleMarkAsDone.bind(this)
         this.handleMarkAsPending = this.handleMarkAsPending.bind(this)
-        this.handleRemove = this.handleRemove.bind(this)
-        this.handleSearch = this.handleSearch.bind(this)
+        this.handleRemove = this.handleRemove.bind(this)        
 
         // Chamada do método refresh
         this.refresh()
@@ -73,6 +76,11 @@ export default class Todo extends Component {
         this.refresh( this.state.description )
     }
 
+    // Método para limpar o filtro de busca
+    handleClear () {
+        this.refresh()
+    }
+
     render() {
         return(
             <div>
@@ -81,7 +89,8 @@ export default class Todo extends Component {
                     description={ this.state.description }
                     handleChange={ this.handleChange }
                     handleAdd={ this.handleAdd }
-                    handleSearch={ this.handleSearch } />
+                    handleSearch={ this.handleSearch }
+                    handleClear={ this.handleClear } />
                 <TodoList 
                     list={ this.state.list } 
                     handleMarkAsDone={this.handleMarkAsDone}
