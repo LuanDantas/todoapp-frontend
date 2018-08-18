@@ -30,8 +30,9 @@ export default class Todo extends Component {
     }
 
     // Método para pegar a lista mais atualizada
-    refresh() {
-        Axios.get(`${ URL }?sort=-createdAt`)
+    refresh (description = '') {
+        const search = description ? `&description__regex=/${ description }/` : ''
+        Axios.get(`${ URL }?sort=-createdAt${ search }`)
              .then( resp => this.setState({ ...this.state, description: '', list: resp.data }) )
     }
     
