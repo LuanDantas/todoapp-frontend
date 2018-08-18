@@ -21,6 +21,7 @@ export default class Todo extends Component {
         // Esta linha basicamente força o bind para o this não vir vazio
         this.handleChange = this.handleChange.bind(this)
         this.handleAdd = this.handleAdd.bind(this)
+        this.handleRemove = this.handleRemove.bind(this)
 
         // Chamada do método refresh
         this.refresh()
@@ -28,7 +29,7 @@ export default class Todo extends Component {
 
     // Método para pegar a lista mais atualizada
     refresh() {
-        Axios.get(`${ URL }?sort=createdAt`).then( resp => this.setState({ ...this.state, description: '', list: resp.data }) )
+        Axios.get(`${ URL }?sort=-createdAt`).then( resp => this.setState({ ...this.state, description: '', list: resp.data }) )
     }
     
     // Método que será chamado pelo evento 'onChange' do nosso input do componente 'to-do-form'
@@ -43,6 +44,11 @@ export default class Todo extends Component {
         Axios.post(URL, { description }).then(resp => this.refresh())
     }
 
+    // Método para remover/excluir o item(to-do) selecionado
+    handleRemove (todo) {
+        Axios.delete( `${ URL }/${ todo._id }` ).then( resp => this.refresh() )
+    }
+
     render() {
         return(
             <div>
@@ -51,7 +57,7 @@ export default class Todo extends Component {
                     description={ this.state.description }
                     handleChange={ this.handleChange }
                     handleAdd={ this.handleAdd } />
-                <TodoList />
+                <TodoList list={ this.state.list } handleRemove={ this.handleRemove } />
             </div>
         )
     }
