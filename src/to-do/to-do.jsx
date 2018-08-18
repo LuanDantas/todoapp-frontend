@@ -21,6 +21,14 @@ export default class Todo extends Component {
         // Esta linha basicamente força o bind para o this não vir vazio
         this.handleChange = this.handleChange.bind(this)
         this.handleAdd = this.handleAdd.bind(this)
+
+        // Chamada do método refresh
+        this.refresh()
+    }
+
+    // Método para pegar a lista mais atualizada
+    refresh() {
+        Axios.get(`${ URL }?sort=createdAt`).then( resp => this.setState({ ...this.state, description: '', list: resp.data }) )
     }
     
     // Evento que será chamado pelo evento 'onChange' do nosso input do componente 'to-do-form'
