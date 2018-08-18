@@ -34,7 +34,7 @@ export default class Todo extends Component {
     refresh (description = '') {
         const search = description ? `&description__regex=/${ description }/` : ''
         Axios.get(`${ URL }?sort=-createdAt${ search }`)
-             .then( resp => this.setState({ ...this.state, description: '', list: resp.data }) )
+             .then( resp => this.setState({ ...this.state, description, list: resp.data }) )
     }
     
     // Método que será chamado pelo evento 'onChange' do nosso input do componente 'to-do-form'
@@ -53,19 +53,19 @@ export default class Todo extends Component {
     // Método para remover/excluir o item(to-do) selecionado
     handleRemove (todo) {
         Axios.delete( `${ URL }/${ todo._id }` )
-             .then( resp => this.refresh() )
+             .then( resp => this.refresh(this.state.description) )
     }
 
     // Método para marcar o item como finalizado
     handleMarkAsDone (todo) {
         Axios.put( `${ URL }/${ todo._id }`, { ...todo, done: true } )
-             .then( resp => this.refresh() )
+             .then( resp => this.refresh(this.state.description) )
     }
 
     // Método para marcar o item como pendente
     handleMarkAsPending (todo) {
         Axios.put(`${URL}/${todo._id}`, { ...todo, done: false })
-             .then(resp => this.refresh())
+             .then(resp => this.refresh(this.state.description))
     }
 
     // Método para buscar os itens cadastrados
