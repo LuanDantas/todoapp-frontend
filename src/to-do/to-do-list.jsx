@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 
 // Component && Reducers imports
 import IconButton from '../template/icon-button'
-import { markAsDone } from './todoActions'
+import { markAsDone, markAsPending } from './todoActions'
 
 const TodoList = props => {
 
@@ -20,9 +20,9 @@ const TodoList = props => {
             <tr key={ todo._id } >
                 <td className={ todo.done ? 'marked-as-done' : '' }>{ todo.description }</td>
                 <td>
-                    <IconButton style='success' icon='check' hide={ todo.done } onClick={ () => props.markAsDone( todo ) }></IconButton>
-                    <IconButton style='warning' icon='undo' hide={ !todo.done } onClick={() => props.handleMarkAsPending(todo)}></IconButton>
-                    <IconButton style='danger' icon='trash-o' onClick={ () => props.handleRemove( todo ) }></IconButton>
+                    <IconButton style='success' icon='check' hide={ todo.done } onClick={ () => props.markAsDone(todo) }></IconButton>
+                    <IconButton style='warning' icon='undo' hide={ !todo.done } onClick={ () => props.markAsPending(todo) }></IconButton>
+                    <IconButton style='danger' icon='trash-o' onClick={ () => props.handleRemove(todo) }></IconButton>
                 </td>
             </tr>
         ))
@@ -52,6 +52,6 @@ const mapStateToProps = state => ({ list: state.todo.list })
  * Método para exportar o componente `to-do-list` porém agora decorado com todas as propriedades e atributos necessários
  * Faz o bind do nosso componente com as nossas actions creators
 */
-const mapDispatchToProps = dispatch => bindActionCreators({ markAsDone }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ markAsDone, markAsPending }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
