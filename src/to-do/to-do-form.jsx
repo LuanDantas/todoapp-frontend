@@ -1,10 +1,14 @@
 // Default imports
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 // Componentes imports
 import Grid from '../template/grid'
 import IconButton from '../template/icon-button'
+
+// Action Creators imports
+import { changeDescription } from './todoActions'
 
 const TodoForm = props => {
     // Método para verificar qual foi ou quais foram as teclas pressionadas
@@ -23,7 +27,7 @@ const TodoForm = props => {
             <Grid cols='12 9 10'>
                 <input type="text" id='description' className='form-control' placeholder='Adicione uma tarefa' 
                        value={ props.description } 
-                       onChange={ props.handleChange }
+                       onChange={ props.changeDescription }
                        onKeyUp={ keyHandler } />
             </Grid>
 
@@ -41,8 +45,10 @@ const TodoForm = props => {
 */
 const mapStateToProps = state => ({ description: state.todo.description })
 
-export default connect(mapStateToProps)(TodoForm)
-
 /*
  * Método para exportar o componente `to-do-list` porém agora decorado com todas as propriedades e atributos necessários
+ * Faz o bind do nosso componente com as nossas actions creators
 */
+const mapDispatchToProps = dispatch => bindActionCreators({ changeDescription }, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoForm)
