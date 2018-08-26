@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 // Middlewares
 import promise from 'redux-promise'
 import multi from 'redux-multi'
+import thunk from 'redux-thunk'
 
 // Componentes && Reducers imports
 import App from './main/app'
@@ -23,7 +24,7 @@ const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_
  * Recebe o resultado do método createStore passando como parâmetro os nossos reducers
  * Params = @reducers
 */ 
-const store = applyMiddleware(multi, promise)(createStore)(reducers, devTools)
+const store = applyMiddleware(thunk, multi, promise)(createStore)(reducers, devTools)
 
 ReactDOM.render(
     <Provider store={ store }>
