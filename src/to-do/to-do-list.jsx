@@ -1,7 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import IconButton from '../template/icon-button'
 
-export default props => {
+const TodoList = props => {
 
     // Função para renderizar as linhas da tabela
     const renderRows = () => {
@@ -36,3 +37,14 @@ export default props => {
         </table>
     )
 }
+
+/*
+ * Método para mapear o estado do redux com as propriedades do objeto
+*/
+const mapStateToProps = state => ({ list: state.todo.list })
+
+export default connect(mapStateToProps)(TodoList)
+
+/*
+ * Método para exportar o componente `to-do-list` porém agora decorado com todas as propriedades e atributos necessários
+*/
