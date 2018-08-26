@@ -7,11 +7,17 @@ import App from './main/app'
 import reducers from './main/reducers'
 
 /*
- * Constante para cirar a nossa store a trabalhar com o Redux
+ * Constante para integrar a utilização do plugin 'Redux Chrome Dev Tools'
+ * no Google Chrome
+*/
+const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+/*
+ * Constante para criar a nossa store a trabalhar com o Redux
  * Recebe o resultado do método createStore passando como parâmetro os nossos reducers
  * Params = @reducers
 */ 
-const store = createStore(reducers)
+const store = createStore(reducers, devTools)
 
 ReactDOM.render(
     <Provider store={ store }>
